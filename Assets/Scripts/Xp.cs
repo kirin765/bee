@@ -5,7 +5,8 @@ using UnityEngine.UI;
 public class Xp : MonoBehaviour
 {
     [SerializeField]
-    private int[] xpPerLevel = {10,10,10};
+    // Debug: set low XP per level for quick leveling during testing
+    private int[] xpPerLevel = {1,1,1};
 
     [SerializeField]
     private Image xpBar;
