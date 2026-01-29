@@ -5,6 +5,8 @@ public class Bee : MonoBehaviour
 {
 
     [SerializeField]
+    private int hp = 1;
+    [SerializeField]
     private int beeXp = 1;
     [SerializeField]
     private float speed = 1.0f;
@@ -58,17 +60,24 @@ public class Bee : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        
-        if(collision.CompareTag("Arrow"))
-        {
-            if (xp != null) xp.AddXp(beeXp);
-            col.enabled = false;
-            isAlive=false;
-
-            if(fallCo == null)
-                StartCoroutine(Falling());
-        }
+        // arrow handling moved to Arrow.TakeDamage -> Bee.TakeDamage
     }
+
+        // Returns true if the bee died from this damage
+        public bool TakeDamage(int damage)
+        {
+            if (!isAlive) return false;
+            hp -= damage;
+            if (hp <= 0)
+            {
+                isAlive = false;
+                col.enabled = false;
+                if (xp != null) xp.AddXp(beeXp);
+                if (fallCo == null) StartCoroutine(Falling());
+                return true;
+            }
+            return false;
+        }
 
     IEnumerator Falling()
     {

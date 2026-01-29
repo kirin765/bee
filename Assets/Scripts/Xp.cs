@@ -17,6 +17,10 @@ public class Xp : MonoBehaviour
     public int Level => level;
     public int XpSum => xpSum;
 
+
+    [SerializeField] private SkillManager skillManager;
+    [SerializeField] private SkillWindow skillWindow;
+
     void Start()
     {
         xpSum = 0;
@@ -27,11 +31,20 @@ public class Xp : MonoBehaviour
         xpSum += xp;
         if (xpPerLevel == null || xpPerLevel.Length == 0) return;
 
+        bool leveled = false;
         while (level < xpPerLevel.Length && xpSum >= xpPerLevel[level])
         {
             xpSum -= xpPerLevel[level];
             level++;
+            leveled = true;
             if (xpBar != null) xpBar.fillAmount = 0f;
+            // On each level up, present skill choices
+            if (skillManager != null && skillWindow != null)
+            {
+                var (a, b) = skillManager.PickTwoSkills();
+                // Show options and apply when chosen
+                skillWindow.ShowOptions(a, b, chosen => { skillManager.ApplySkill(chosen); });
+            }
         }
 
         if (xpBar != null)

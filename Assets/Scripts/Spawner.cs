@@ -34,6 +34,15 @@ public class Spawner : MonoBehaviour
             Instantiate(arrowPrefab, pos, Quaternion.identity);
     }
 
+    public void MakeArrow(Vector3 pos, int damage, int pierce, float xOffset)
+    {
+        if (arrowPrefab == null) return;
+        Vector3 spawnPos = pos + new Vector3(xOffset, 0f, 0f);
+        Arrow a = Instantiate(arrowPrefab, spawnPos, Quaternion.identity);
+        a.damage = damage;
+        a.pierceRemaining = Mathf.Max(0, pierce - 1); // pierceRemaining means how many extra hits it can make
+    }
+
     public void MakeBee(Vector3 pos)
     {
         if (beePrefab == null) return;
