@@ -67,8 +67,8 @@ public class Bow : MonoBehaviour
         // simple spread offsets
         float[] offsets;
         if (count == 1) offsets = new float[] { 0f };
-        else if (count == 3) offsets = new float[] { -0.2f, 0f, 0.2f };
-        else offsets = new float[] { -0.4f, -0.2f, 0f, 0.2f, 0.4f };
+        else if (count == 2) offsets = new float[] { -0.1f, 0.1f };
+        else offsets = new float[] { -0.2f, 0f, 0.2f };
 
         foreach (var off in offsets)
         {

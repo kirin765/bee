@@ -38,7 +38,7 @@ public class Spawner : MonoBehaviour
     {
         if (arrowPrefab == null) return;
         Vector3 spawnPos = pos + new Vector3(xOffset, 0f, 0f);
-        Arrow a = Instantiate(arrowPrefab, spawnPos, Quaternion.identity);
+        Arrow a = Instantiate(arrowPrefab, spawnPos, arrowPrefab.transform.rotation);
         a.damage = damage;
         a.pierceRemaining = Mathf.Max(0, pierce - 1); // pierceRemaining means how many extra hits it can make
     }

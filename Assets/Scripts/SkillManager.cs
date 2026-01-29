@@ -5,7 +5,7 @@ public enum SkillType { ArrowCount, ArrowDamage, ArrowPiercing, ArrowCooldown, U
 
 public class SkillManager : MonoBehaviour
 {
-    [SerializeField] private int arrowCountLevel = 0; // 0 -> 1, 1 -> 3, 2 -> 5
+    [SerializeField] private int arrowCountLevel = 0; // 0 -> 1, 1 -> 2, 2 -> 3
     [SerializeField] private int arrowDamage = 1;
     [SerializeField] private int arrowPierceLevel = 0; // 0..2 meaning 0..2 extra pierces (max 3)
     [SerializeField] private float cooldownMultiplier = 1.0f; // multiplies base cooldown
@@ -21,13 +21,7 @@ public class SkillManager : MonoBehaviour
 
     public int GetArrowCount()
     {
-        switch (arrowCountLevel)
-        {
-            case 0: return 1;
-            case 1: return 3;
-            case 2: return 5;
-            default: return 1;
-        }
+        return Mathf.Clamp(arrowCountLevel, 0, 2) + 1; // 1..3
     }
 
     public int GetArrowDamage() => Math.Max(1, arrowDamage);
@@ -45,8 +39,8 @@ public class SkillManager : MonoBehaviour
         {
             case SkillType.ArrowCount:
                 arrowCountLevel = Mathf.Clamp(arrowCountLevel + 1, 0, 2);
-                // penalty: increase cooldown by 10% per level
-                cooldownMultiplier *= 1.10f;
+                // penalty: increase cooldown by 15% per level
+                cooldownMultiplier *= 1.15f;
                 break;
             case SkillType.ArrowDamage:
                 arrowDamage += 1;

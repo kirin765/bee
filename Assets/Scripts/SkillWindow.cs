@@ -39,7 +39,7 @@ public class SkillWindow : MonoBehaviour
     {
         switch (s)
         {
-            case SkillType.ArrowCount: return "Arrow Count: 1 -> 3 -> 5 (increases cooldown)";
+            case SkillType.ArrowCount: return "Arrow Count: 1 -> 2 -> 3 (increases cooldown)";
             case SkillType.ArrowDamage: return "Arrow Damage: +1";
             case SkillType.ArrowPiercing: return "Arrow Piercing: penetrate more enemies (damage penalty)";
             case SkillType.ArrowCooldown: return "Arrow Cooldown: reduce cooldown";
