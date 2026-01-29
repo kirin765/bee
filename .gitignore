@@ -1,0 +1,50 @@
+# ===== Unity generated =====
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Uu]ser[Ss]ettings/
+MemoryCaptures/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Visual Studio / Rider
+.vs/
+.vscode/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+
+# Mono
+*.mdb
+
+# Build output
+*.apk
+*.aab
+*.unitypackage
+
+# Asset meta and cache (keep Assets and ProjectSettings only)
+/Assets/**/*.meta
+
+# Don't check in local Unity Packages cache
+/Library/PackageCache/
+
+# Crash reports
+/Crashes/
+
+# Logs
+*.log
+
+# Ignore large generated files and temporary build artifacts
+/Temp/
+/obj/
