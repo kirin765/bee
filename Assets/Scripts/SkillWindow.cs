@@ -31,6 +31,8 @@ public class SkillWindow : MonoBehaviour
         windowRoot.SetActive(true);
         if (optionAText != null) optionAText.text = Describe(a);
         if (optionBText != null) optionBText.text = Describe(b);
+        // Pause game while player chooses a skill
+        Time.timeScale = 0f;
     }
 
     string Describe(SkillType s)
@@ -49,12 +51,14 @@ public class SkillWindow : MonoBehaviour
     void ChooseA()
     {
         if (windowRoot != null) windowRoot.SetActive(false);
+        Time.timeScale = 1f;
         onChosen?.Invoke(optionAType);
     }
 
     void ChooseB()
     {
         if (windowRoot != null) windowRoot.SetActive(false);
+        Time.timeScale = 1f;
         onChosen?.Invoke(optionBType);
     }
 }
