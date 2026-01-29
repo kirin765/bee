@@ -3,10 +3,10 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     [SerializeField]
-    public Arrow arrowPrefab;
-    
+    private Arrow arrowPrefab;
+
     [SerializeField]
-    public Bee beePrefab;
+    private Bee beePrefab;
 
     [SerializeField]
     private float beeCooltime = 3.0f;
@@ -14,11 +14,11 @@ public class Spawner : MonoBehaviour
     private float left_limit_x;
     private float right_limit_x;
     [SerializeField]
-    public Xp xp;
+    private Xp xp;
     [SerializeField]
-    public GameOver gameOver;
+    private GameOver gameOver;
     [SerializeField]
-    public Hearts hearts;
+    private Hearts hearts;
 
     void Start()
     {
@@ -30,15 +30,17 @@ public class Spawner : MonoBehaviour
 
     public void MakeArrow(Vector3 pos)
     {
-        Instantiate(arrowPrefab, pos, Quaternion.identity);
+        if (arrowPrefab != null)
+            Instantiate(arrowPrefab, pos, Quaternion.identity);
     }
 
     public void MakeBee(Vector3 pos)
     {
+        if (beePrefab == null) return;
         Bee bee = Instantiate(beePrefab, pos, beePrefab.transform.rotation);
-        bee.xp = xp;
-        bee.hearts = hearts;
-        bee.gameOver = gameOver;
+        bee.XpRef = xp;
+        bee.HeartsRef = hearts;
+        bee.GameOverRef = gameOver;
     }
 
     void Update()

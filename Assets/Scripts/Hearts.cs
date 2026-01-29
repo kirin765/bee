@@ -24,7 +24,8 @@ public class Hearts : MonoBehaviour
 
     public int LossHeart()
     {
-        for(int i = hearts.Length - 1; i > 0; i--)
+        if (hearts == null || hearts.Length == 0) return 0;
+        for(int i = hearts.Length - 1; i >= 0; i--)
         {
             if (hearts[i].activeSelf)
             {

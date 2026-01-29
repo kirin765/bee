@@ -4,16 +4,16 @@ using UnityEngine.UI;
 public class Bow : MonoBehaviour
 {
     [SerializeField]
-    Camera cam;
+    private Camera cam;
 
     [SerializeField]
     private float speed = 1.0f;
     [SerializeField]
-    Spawner arrowSpawner;
+    private Spawner arrowSpawner;
     [SerializeField]
-    public float coolTime = 1.0f;
+    private float coolTime = 1.0f;
     [SerializeField]
-    public Image gauge;
+    private Image gauge;
     private float x_dir = 1.0f;
     private float passedTime = 0f;
 
@@ -26,6 +26,7 @@ public class Bow : MonoBehaviour
 
     void Update()
     {
+        if (cam == null) cam = Camera.main;
         float halfHeight = cam.orthographicSize;
         float halfWidth = halfHeight * cam.aspect;
 
@@ -41,7 +42,8 @@ public class Bow : MonoBehaviour
         transform.position = pos;
 
         passedTime += Time.deltaTime;
-        gauge.fillAmount = Mathf.Clamp01(passedTime/coolTime);
+        if (gauge != null)
+            gauge.fillAmount = Mathf.Clamp01(passedTime/coolTime);
     }
 
 

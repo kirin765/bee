@@ -3,7 +3,7 @@ using UnityEngine;
 public class Arrow : MonoBehaviour
 {
     [SerializeField]
-    public float speed = 1.0f;
+    private float speed = 1.0f;
     private Rigidbody2D rb;
     void Start()
     {
@@ -18,7 +18,14 @@ public class Arrow : MonoBehaviour
 
     void Update()
     {
-        rb.MovePosition(rb.position + Vector2.up * speed * Time.deltaTime);
+        if (rb != null)
+        {
+            rb.MovePosition(rb.position + Vector2.up * speed * Time.deltaTime);
+        }
+        else
+        {
+            transform.Translate(Vector3.up * speed * Time.deltaTime);
+        }
     }
 
 }

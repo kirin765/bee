@@ -5,14 +5,20 @@ public class Bee : MonoBehaviour
 {
 
     [SerializeField]
-    public int beeXp = 1;
+    private int beeXp = 1;
     [SerializeField]
     private float speed = 1.0f;
-    public Xp xp;
-    public GameOver gameOver;
+    [SerializeField]
+    private Xp xp;
+    [SerializeField]
+    private GameOver gameOver;
     private Coroutine fallCo;
     private Rigidbody2D rb;
-    public Hearts hearts;
+    [SerializeField]
+    private Hearts hearts;
+    public Xp XpRef { get => xp; set => xp = value; }
+    public GameOver GameOverRef { get => gameOver; set => gameOver = value; }
+    public Hearts HeartsRef { get => hearts; set => hearts = value; }
     private bool isAlive = true;
     float halfHeight;
     float deadLine;
@@ -33,10 +39,10 @@ public class Bee : MonoBehaviour
         if(isAlive && (pos.y < deadLine))
         {
             isAlive = false;
-            int heart_cnt = hearts.LossHeart();
+            int heart_cnt = hearts != null ? hearts.LossHeart() : 0;
             if (heart_cnt == 0)
             {
-                gameOver.TurnOn();
+                if (gameOver != null) gameOver.TurnOn();
             }
             else
             {
@@ -55,7 +61,7 @@ public class Bee : MonoBehaviour
         
         if(collision.CompareTag("Arrow"))
         {
-            xp.AddXp(beeXp);
+            if (xp != null) xp.AddXp(beeXp);
             col.enabled = false;
             isAlive=false;
 

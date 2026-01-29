@@ -5,14 +5,17 @@ using UnityEngine.UI;
 public class Xp : MonoBehaviour
 {
     [SerializeField]
-    int[] xpPerLevel = {10,10,10};
+    private int[] xpPerLevel = {10,10,10};
 
     [SerializeField]
-    Image xpBar;
+    private Image xpBar;
     [SerializeField]
-    TMP_Text levelText;
-    public int xpSum;
-    public int level = 0;
+    private TMP_Text levelText;
+    private int xpSum;
+    private int level = 0;
+
+    public int Level => level;
+    public int XpSum => xpSum;
 
     void Start()
     {
@@ -21,16 +24,20 @@ public class Xp : MonoBehaviour
 
     public void AddXp(int xp)
     {
-        xpSum+=xp;
-        if(xpPerLevel.Length-1>level && xpSum > xpPerLevel[level])
+        xpSum += xp;
+        if (xpPerLevel == null || xpPerLevel.Length == 0) return;
+
+        while (level < xpPerLevel.Length && xpSum >= xpPerLevel[level])
         {
-            xpSum-=xpPerLevel[level];
+            xpSum -= xpPerLevel[level];
             level++;
-            xpBar.fillAmount = 0f;
+            if (xpBar != null) xpBar.fillAmount = 0f;
         }
-        
-        xpBar.fillAmount += Mathf.Clamp01((float)xpSum/xpPerLevel[level]);
-        levelText.text = $"{level}";
+
+        if (xpBar != null)
+            xpBar.fillAmount = Mathf.Clamp01((float)xpSum / xpPerLevel[Mathf.Clamp(level, 0, xpPerLevel.Length - 1)]);
+        if (levelText != null)
+            levelText.text = level.ToString();
     }
 
     public int totalXP()
