@@ -33,14 +33,14 @@ public class Arrow : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (rb != null)
         {
-            rb.MovePosition(rb.position + (Vector2)transform.up * speed * Time.deltaTime);
+            rb.linearVelocity = transform.up * speed;
             return;
         }
 
-        transform.Translate(Vector3.up * speed * Time.deltaTime);
+        transform.Translate(Vector3.up * speed * Time.fixedDeltaTime);
     }
 }

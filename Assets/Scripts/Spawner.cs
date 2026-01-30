@@ -13,6 +13,8 @@ public class Spawner : MonoBehaviour
     private float passedTime = 0f;
     private float left_limit_x;
     private float right_limit_x;
+    private float top_limit_y;
+    [SerializeField] private float beeSpawnYOffset = 1.0f;
     [SerializeField]
     private Xp xp;
     [SerializeField]
@@ -26,6 +28,7 @@ public class Spawner : MonoBehaviour
         float halfHeight = cam.orthographicSize;
         left_limit_x = -halfHeight * cam.aspect;
         right_limit_x = halfHeight * cam.aspect;
+        top_limit_y = halfHeight;
     }
 
     public void MakeArrow(Vector3 pos)
@@ -38,7 +41,7 @@ public class Spawner : MonoBehaviour
     {
         if (arrowPrefab == null) return;
         Vector3 spawnPos = pos + new Vector3(xOffset, 0f, 0f);
-        Arrow a = Instantiate(arrowPrefab, spawnPos, arrowPrefab.transform.rotation);
+        Arrow a = Instantiate(arrowPrefab, spawnPos, Quaternion.identity);
         a.damage = damage;
         a.pierceRemaining = Mathf.Max(0, pierce - 1); // pierceRemaining means how many extra hits it can make
     }
@@ -59,7 +62,8 @@ public class Spawner : MonoBehaviour
         {
             passedTime = 0f;
 
-            MakeBee(new Vector3(Random.Range(left_limit_x, right_limit_x), 15.0f, 0f));
+            float spawnY = top_limit_y + beeSpawnYOffset;
+            MakeBee(new Vector3(Random.Range(left_limit_x, right_limit_x), spawnY, 0f));
         }
     }
 }

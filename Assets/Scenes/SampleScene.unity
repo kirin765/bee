@@ -919,16 +919,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 035c764cc755e5846bd95cff5ecf7cce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SkillManager
-  arrowCountLevel: 0
+  arrowCountLevel: 2
   arrowDamage: 1
   arrowPierceLevel: 0
   cooldownMultiplier: 1
   hasUltimate: 0
-  debugArrowCountLevel: 2
-  debugArrowPierceLevel: 0
-  debugArrowDamage: 1
-  debugCooldownMultiplier: 1
-  debugHasUltimate: 0
 --- !u!114 &542580015
 MonoBehaviour:
   m_ObjectHideFlags: 0

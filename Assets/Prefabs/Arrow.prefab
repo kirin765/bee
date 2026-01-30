@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5386177844238571529}
   - component: {fileID: 515964123919821151}
   - component: {fileID: -228994540754359751}
-  - component: {fileID: 6623001964549767763}
+  - component: {fileID: 7139194049070725957}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: Arrow
@@ -28,13 +28,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4873521054477166053}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.38268343, w: 0.92387956}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.6, y: 3.6, z: 1}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5386177844238571529
 SpriteRenderer:
   serializedVersion: 2
@@ -84,7 +84,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: d10102eb482149b409412e270eaa9aef, type: 3}
+  m_Sprite: {fileID: 1975530855901943615, guid: 5f6ccd8ec57274e4d993abc6b0255de1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -117,7 +117,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
@@ -133,11 +133,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6203eaa4f0384e545bac78bc1194189f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Arrow
-  speed: 9
+  speed: 20
   damage: 1
   pierceRemaining: 0
---- !u!60 &6623001964549767763
-PolygonCollider2D:
+--- !u!61 &7139194049070725957
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -170,24 +170,15 @@ PolygonCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0013219789, y: 0.0065154135}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.32, y: 0.32}
+    oldSize: {x: 0.17, y: 0.64}
     newSize: {x: 0.32, y: 0.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.099999994, y: 0.16}
-      - {x: -0.16, y: -0.07}
-      - {x: -0.16, y: -0.12}
-      - {x: -0.13, y: -0.16}
-      - {x: -0.089999996, y: -0.16}
-      - {x: 0.16, y: 0.08}
-      - {x: 0.16, y: 0.14999999}
-      - {x: 0.14999999, y: 0.16}
-  m_UseDelaunayMesh: 1
+  m_Size: {x: 0.15413629, y: 0.60317355}
+  m_EdgeRadius: 0

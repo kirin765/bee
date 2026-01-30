@@ -30,8 +30,10 @@ public class Bee : MonoBehaviour
         col = GetComponent<Collider2D>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
+        if (rb == null) return;
+
         Vector2 pos = rb.position;
 
         if (isAlive && pos.y < deadLine)
@@ -54,7 +56,7 @@ public class Bee : MonoBehaviour
             }
         }
 
-        pos.y -= Time.deltaTime * speed;
+        pos.y -= Time.fixedDeltaTime * speed;
         rb.MovePosition(pos);
     }
 
