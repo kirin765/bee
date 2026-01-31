@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum SkillType { ArrowCount, ArrowDamage, ArrowPiercing, ArrowCooldown, Ultimate }
@@ -9,15 +10,11 @@ public class SkillManager : MonoBehaviour
     [SerializeField] private int arrowDamage = 1;
     [SerializeField] private int arrowPierceLevel = 0; // 0..2 meaning 0..2 extra pierces (max 3)
     [SerializeField] private float cooldownMultiplier = 1.0f; // multiplies base cooldown
-    [SerializeField] private bool hasUltimate = false;
+    [SerializeField] private int ultimateCount = 1;
+    [SerializeField] private int maxUltimateCount = 2;
 
     public static SkillManager Instance { get; private set; }
 
-    void Awake()
-    {
-        if (Instance != null && Instance != this) Destroy(this);
-        else Instance = this;
-    }
 
     public int GetArrowCount()
     {
@@ -30,7 +27,19 @@ public class SkillManager : MonoBehaviour
 
     public float GetCooldownMultiplier() => cooldownMultiplier;
 
-    public bool HasUltimate() => hasUltimate;
+    public bool HasUltimate() => GetUltimateCount() > 0;
+
+    public int GetUltimateCount()
+    {
+        return Mathf.Clamp(ultimateCount, 0, maxUltimateCount);
+    }
+
+    public bool TryUseUltimate()
+    {
+        if (ultimateCount <= 0) return false;
+        ultimateCount--;
+        return true;
+    }
 
     // Apply chosen skill (simple progression)
     public void ApplySkill(SkillType skill)
@@ -54,7 +63,7 @@ public class SkillManager : MonoBehaviour
                 cooldownMultiplier = Mathf.Max(0.5f, cooldownMultiplier * 0.9f);
                 break;
             case SkillType.Ultimate:
-                hasUltimate = true;
+                if (ultimateCount < maxUltimateCount) ultimateCount++;
                 break;
         }
     }
@@ -62,10 +71,27 @@ public class SkillManager : MonoBehaviour
     // Pick two random skills for level-up choices (skips Ultimate until a later level if needed)
     public (SkillType, SkillType) PickTwoSkills()
     {
-        SkillType[] all = { SkillType.ArrowCount, SkillType.ArrowDamage, SkillType.ArrowPiercing, SkillType.ArrowCooldown, SkillType.Ultimate };
-        int i = UnityEngine.Random.Range(0, all.Length);
-        int j = UnityEngine.Random.Range(0, all.Length - 1);
+        List<SkillType> pool = new List<SkillType>
+        {
+            SkillType.ArrowCount,
+            SkillType.ArrowDamage,
+            SkillType.ArrowPiercing,
+            SkillType.ArrowCooldown
+        };
+
+        if (ultimateCount < maxUltimateCount) pool.Add(SkillType.Ultimate);
+
+        int i = UnityEngine.Random.Range(0, pool.Count);
+        int j = UnityEngine.Random.Range(0, pool.Count - 1);
         if (j >= i) j++; // ensure j != i
-        return (all[i], all[j]);
+        return (pool[i], pool[j]);
+    }
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this) Destroy(this);
+        else Instance = this;
+
+        ultimateCount = Mathf.Clamp(ultimateCount, 1, maxUltimateCount);
     }
 }
