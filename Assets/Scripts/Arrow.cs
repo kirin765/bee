@@ -9,7 +9,7 @@ public class Arrow : MonoBehaviour
     public int damage = 1;
     public int pierceRemaining = 0; // 0 means no pierce
 
-    private void Start()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
@@ -19,10 +19,7 @@ public class Arrow : MonoBehaviour
         if (!collision.CompareTag("Bee")) return;
 
         Bee bee = collision.GetComponent<Bee>();
-        if (bee != null)
-        {
-            bee.TakeDamage(damage);
-        }
+        if (bee != null) bee.TakeDamage(damage);
 
         if (pierceRemaining > 0)
         {
@@ -38,9 +35,10 @@ public class Arrow : MonoBehaviour
         if (rb != null)
         {
             rb.linearVelocity = transform.up * speed;
-            return;
         }
-
-        transform.Translate(Vector3.up * speed * Time.fixedDeltaTime);
+        else
+        {
+            transform.Translate(Vector3.up * speed * Time.fixedDeltaTime);
+        }
     }
 }

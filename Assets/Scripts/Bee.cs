@@ -9,14 +9,18 @@ public class Bee : MonoBehaviour
     [SerializeField] private Xp xp;
     [SerializeField] private GameOver gameOver;
     [SerializeField] private Hearts hearts;
+    [SerializeField] private string beeLayerName = "Bee";
 
-    private Coroutine fallCo;
+    private Coroutine fallCoroutine;
     private Rigidbody2D rb;
     private Collider2D col;
 
     private bool isAlive = true;
-    private float halfHeight;
-    private float deadLine;
+    private float deathLineY;
+    private static bool beeCollisionIgnored = false;
+
+    private const float DeathLineOffset = 0.5f;
+    private const float FallDuration = 3.0f;
 
     public Xp XpRef { get => xp; set => xp = value; }
     public GameOver GameOverRef { get => gameOver; set => gameOver = value; }
@@ -32,10 +36,24 @@ public class Bee : MonoBehaviour
 
     private void Awake()
     {
-        halfHeight = Camera.main.orthographicSize;
-        deadLine = -halfHeight - 0.5f;
+        if (!beeCollisionIgnored)
+        {
+            int layer = LayerMask.NameToLayer(beeLayerName);
+            if (layer >= 0) Physics2D.IgnoreLayerCollision(layer, layer, true);
+            beeCollisionIgnored = true;
+        }
+
+        int beeLayer = LayerMask.NameToLayer(beeLayerName);
+        if (beeLayer >= 0 && gameObject.layer != beeLayer)
+        {
+            gameObject.layer = beeLayer;
+        }
+
+        float halfHeight = Camera.main.orthographicSize;
+        deathLineY = -halfHeight - DeathLineOffset;
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
+        if (rb != null) rb.freezeRotation = true;
     }
 
     private void FixedUpdate()
@@ -44,7 +62,7 @@ public class Bee : MonoBehaviour
 
         Vector2 pos = rb.position;
 
-        if (isAlive && pos.y < deadLine)
+        if (isAlive && pos.y < deathLineY)
         {
             isAlive = false;
             if (hearts != null && hearts.IsInvincible)
@@ -84,7 +102,7 @@ public class Bee : MonoBehaviour
             isAlive = false;
             col.enabled = false;
             if (xp != null) xp.AddXp(beeXp);
-            if (fallCo == null) StartCoroutine(Falling());
+            if (fallCoroutine == null) fallCoroutine = StartCoroutine(Falling());
             return true;
         }
 
@@ -93,14 +111,13 @@ public class Bee : MonoBehaviour
 
     private IEnumerator Falling()
     {
-        float duration = 3.0f;
         float passedTime = 0f;
         Vector3 baseScale = transform.localScale;
 
-        while (passedTime < duration)
+        while (passedTime < FallDuration)
         {
             passedTime += Time.deltaTime;
-            transform.localScale = baseScale * Mathf.Lerp(1.0f, 0f, Mathf.Clamp01(passedTime / duration));
+            transform.localScale = baseScale * Mathf.Lerp(1.0f, 0f, Mathf.Clamp01(passedTime / FallDuration));
             transform.Rotate(0f, 0f, 720f * Time.deltaTime);
             yield return null;
         }

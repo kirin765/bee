@@ -9,10 +9,8 @@ public class Hearts : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < hearts.Length; i++)
-        {
-            hearts[i].SetActive(true);
-        }
+        if (hearts == null) return;
+        for (int i = 0; i < hearts.Length; i++) hearts[i].SetActive(true);
     }
 
     public int LossHeart()

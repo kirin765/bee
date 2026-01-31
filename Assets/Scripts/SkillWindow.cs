@@ -24,7 +24,7 @@ public class SkillWindow : MonoBehaviour
     private SkillType optionAType;
     private SkillType optionBType;
 
-    void Awake()
+    private void Awake()
     {
         if (windowRoot != null) windowRoot.SetActive(false);
         if (optionAButton != null) optionAButton.onClick.AddListener(() => ChooseA());
@@ -38,15 +38,19 @@ public class SkillWindow : MonoBehaviour
         optionAType = a;
         optionBType = b;
         windowRoot.SetActive(true);
-        if (optionAText != null) optionAText.text = Describe(a);
-        if (optionBText != null) optionBText.text = Describe(b);
-        if (optionAImage != null) optionAImage.sprite = GetSprite(a);
-        if (optionBImage != null) optionBImage.sprite = GetSprite(b);
+        SetOption(optionAText, optionAImage, a);
+        SetOption(optionBText, optionBImage, b);
         // Pause game while player chooses a skill
         Time.timeScale = 0f;
     }
 
-    string Describe(SkillType s)
+    private void SetOption(TMP_Text text, Image image, SkillType type)
+    {
+        if (text != null) text.text = Describe(type);
+        if (image != null) image.sprite = GetSprite(type);
+    }
+
+    private string Describe(SkillType s)
     {
         switch (s)
         {
@@ -59,7 +63,7 @@ public class SkillWindow : MonoBehaviour
         }
     }
 
-    Sprite GetSprite(SkillType s)
+    private Sprite GetSprite(SkillType s)
     {
         switch (s)
         {
@@ -72,14 +76,14 @@ public class SkillWindow : MonoBehaviour
         }
     }
 
-    void ChooseA()
+    private void ChooseA()
     {
         if (windowRoot != null) windowRoot.SetActive(false);
         Time.timeScale = 1f;
         onChosen?.Invoke(optionAType);
     }
 
-    void ChooseB()
+    private void ChooseB()
     {
         if (windowRoot != null) windowRoot.SetActive(false);
         Time.timeScale = 1f;

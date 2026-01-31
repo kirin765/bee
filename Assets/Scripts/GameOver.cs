@@ -4,12 +4,10 @@ using UnityEngine.SceneManagement;
 
 public class GameOver : MonoBehaviour
 {
-    [SerializeField]
-    TMP_Text XPText;
-    [SerializeField]
-    Xp xp;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private TMP_Text xpText;
+    [SerializeField] private Xp xp;
+
+    private void Start()
     {
         gameObject.SetActive(false);
     }
@@ -17,9 +15,9 @@ public class GameOver : MonoBehaviour
     public void TurnOn()
     {
         gameObject.SetActive(true);
-        int xpSum = xp.totalXP();
-        XPText.text = $"{xpSum}XP";
-        Time.timeScale=0f;
+        int xpSum = xp != null ? xp.totalXP() : 0;
+        if (xpText != null) xpText.text = $"{xpSum}XP";
+        Time.timeScale = 0f;
     }
 
     public void Retry()
@@ -27,10 +25,4 @@ public class GameOver : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
 }

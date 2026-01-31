@@ -15,15 +15,25 @@ public class SkillManager : MonoBehaviour
 
     public static SkillManager Instance { get; private set; }
 
+    private const int MaxArrowLevel = 2;
+    private const int MaxPierceLevel = 2;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this) Destroy(this);
+        else Instance = this;
+
+        ultimateCount = Mathf.Clamp(ultimateCount, 1, maxUltimateCount);
+    }
 
     public int GetArrowCount()
     {
-        return Mathf.Clamp(arrowCountLevel, 0, 2) + 1; // 1..3
+        return Mathf.Clamp(arrowCountLevel, 0, MaxArrowLevel) + 1; // 1..3
     }
 
     public int GetArrowDamage() => Math.Max(1, arrowDamage);
 
-    public int GetArrowPierceCount() => Mathf.Clamp(arrowPierceLevel, 0, 2) + 1; // 1..3
+    public int GetArrowPierceCount() => Mathf.Clamp(arrowPierceLevel, 0, MaxPierceLevel) + 1; // 1..3
 
     public float GetCooldownMultiplier() => cooldownMultiplier;
 
@@ -47,7 +57,7 @@ public class SkillManager : MonoBehaviour
         switch (skill)
         {
             case SkillType.ArrowCount:
-                arrowCountLevel = Mathf.Clamp(arrowCountLevel + 1, 0, 2);
+                arrowCountLevel = Mathf.Clamp(arrowCountLevel + 1, 0, MaxArrowLevel);
                 // penalty: increase cooldown by 15% per level
                 cooldownMultiplier *= 1.15f;
                 break;
@@ -55,7 +65,7 @@ public class SkillManager : MonoBehaviour
                 arrowDamage += 1;
                 break;
             case SkillType.ArrowPiercing:
-                arrowPierceLevel = Mathf.Clamp(arrowPierceLevel + 1, 0, 2);
+                arrowPierceLevel = Mathf.Clamp(arrowPierceLevel + 1, 0, MaxPierceLevel);
                 // penalty: reduce damage by 10% per pierce-level (rounded)
                 arrowDamage = Math.Max(1, Mathf.RoundToInt(arrowDamage * 0.9f));
                 break;
@@ -85,13 +95,5 @@ public class SkillManager : MonoBehaviour
         int j = UnityEngine.Random.Range(0, pool.Count - 1);
         if (j >= i) j++; // ensure j != i
         return (pool[i], pool[j]);
-    }
-
-    private void Awake()
-    {
-        if (Instance != null && Instance != this) Destroy(this);
-        else Instance = this;
-
-        ultimateCount = Mathf.Clamp(ultimateCount, 1, maxUltimateCount);
     }
 }

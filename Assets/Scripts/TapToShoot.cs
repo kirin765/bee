@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 #if ENABLE_INPUT_SYSTEM && !ENABLE_LEGACY_INPUT_MANAGER
 using UnityEngine.InputSystem;
 #endif
@@ -7,8 +6,6 @@ using UnityEngine.InputSystem;
 public class TapToShoot : MonoBehaviour
 {
     [SerializeField] private Bow bow;
-    [SerializeField] private float topBlockedHeightPx = 160f;
-    [SerializeField] private bool blockWhenOverUI = true;
     [SerializeField] private bool requireBottomHalf = true;
     [SerializeField] private Camera cam;
 
@@ -22,7 +19,6 @@ public class TapToShoot : MonoBehaviour
         if (touch != null && touch.press.wasPressedThisFrame)
         {
             Vector2 pos = touch.position.ReadValue();
-            int id = touch.touchId.ReadValue();
             if (IsInBottomHalf(pos)) bow.Shoot();
             return;
         }

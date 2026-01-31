@@ -19,6 +19,7 @@ public class LevelDirector : MonoBehaviour
     private void Update()
     {
         if (level == null || spawner == null) return;
+        if (level.waves == null || level.waves.Count == 0) return;
 
         elapsed += Time.deltaTime;
         spawner.SetDifficultyMultiplier(level.EvaluateDifficulty(elapsed));

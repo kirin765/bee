@@ -4,52 +4,32 @@ using UnityEngine.UI;
 
 public class Bow : MonoBehaviour
 {
-    [SerializeField]
-    private Camera cam;
+    [SerializeField] private Camera cam;
+    [SerializeField] private float speed = 1.0f;
+    [SerializeField] private Spawner arrowSpawner;
+    [SerializeField] private float coolTime = 1.0f;
+    [SerializeField] private Image gauge;
+    [SerializeField] private float ultimateShotInterval = 0.03f;
 
-    [SerializeField]
-    private float speed = 1.0f;
-    [SerializeField]
-    private Spawner arrowSpawner;
-    [SerializeField]
-    private float coolTime = 1.0f;
-    [SerializeField]
-    private Image gauge;
-    [SerializeField]
-    private float ultimateShotInterval = 0.03f;
-    private float x_dir = 1.0f;
+    private float xDir = 1.0f;
     private float passedTime = 0f;
 
+    private const float BowYOffset = 0.75f;
+    private const int UltimateArrowCount = 11;
+    private static readonly float[] OneOffset = { 0f };
+    private static readonly float[] TwoOffsets = { -0.1f, 0.1f };
+    private static readonly float[] ThreeOffsets = { -0.2f, 0f, 0.2f };
 
-    void Start()
-    {
-        if (cam == null)
-            cam = Camera.main;
-    }
-
-    void Update()
+    private void Start()
     {
         if (cam == null) cam = Camera.main;
-        float halfHeight = cam.orthographicSize;
-        float halfWidth = halfHeight * cam.aspect;
+    }
 
-        float y = -halfHeight + 0.75f;
-
-        Vector3 pos = transform.position;
-        pos.y = y;
-        pos.x += x_dir * speed * Time.deltaTime;
-
-        if (pos.x < -halfWidth) x_dir = 1f;
-        if (pos.x >  halfWidth) x_dir = -1f;
-
-        transform.position = pos;
-
-        passedTime += Time.deltaTime;
-        float effectiveCool = coolTime;
-        if (SkillManager.Instance != null)
-            effectiveCool = coolTime * SkillManager.Instance.GetCooldownMultiplier();
-        if (gauge != null)
-            gauge.fillAmount = Mathf.Clamp01(passedTime / effectiveCool);
+    private void Update()
+    {
+        if (cam == null) cam = Camera.main;
+        UpdateMovement();
+        UpdateGauge();
     }
 
 
@@ -60,54 +40,45 @@ public class Bow : MonoBehaviour
         int count = 1;
         int damage = 1;
         int pierce = 1;
-        if (SkillManager.Instance != null)
+        SkillManager skillManager = SkillManager.Instance;
+        if (skillManager != null)
         {
-            count = SkillManager.Instance.GetArrowCount();
-            damage = SkillManager.Instance.GetArrowDamage();
-            pierce = SkillManager.Instance.GetArrowPierceCount();
+            count = skillManager.GetArrowCount();
+            damage = skillManager.GetArrowDamage();
+            pierce = skillManager.GetArrowPierceCount();
         }
 
-        // simple spread offsets
-        float[] offsets;
-        if (count == 1) offsets = new float[] { 0f };
-        else if (count == 2) offsets = new float[] { -0.1f, 0.1f };
-        else offsets = new float[] { -0.2f, 0f, 0.2f };
-
-        foreach (var off in offsets)
+        float[] offsets = GetOffsets(count);
+        foreach (float off in offsets)
         {
             arrowSpawner.MakeArrow(transform.position, damage, pierce, off);
         }
 
         passedTime = 0f;
-            
     }
 
     public void UseUltimate()
     {
-        if (SkillManager.Instance != null && !SkillManager.Instance.TryUseUltimate()) return;
+        SkillManager skillManager = SkillManager.Instance;
+        if (skillManager != null && !skillManager.TryUseUltimate()) return;
         if (arrowSpawner == null) return;
 
         int damage = 1;
         int pierce = 1;
-        if (SkillManager.Instance != null)
+        if (skillManager != null)
         {
-            damage = SkillManager.Instance.GetArrowDamage();
-            pierce = SkillManager.Instance.GetArrowPierceCount();
+            damage = skillManager.GetArrowDamage();
+            pierce = skillManager.GetArrowPierceCount();
         }
 
-        // Straight line spread: same height, straight up
-        int count = 11;
-        Camera cam = Camera.main;
+        Camera currentCam = cam != null ? cam : Camera.main;
         float spreadX = 1.2f;
-        if (cam != null)
-        {
-            spreadX = cam.orthographicSize * cam.aspect;
-        }
+        if (currentCam != null) spreadX = currentCam.orthographicSize * currentCam.aspect;
 
-        float centerX = (cam != null) ? cam.transform.position.x : transform.position.x;
+        float centerX = (currentCam != null) ? currentCam.transform.position.x : transform.position.x;
         Vector3 basePos = new Vector3(centerX, transform.position.y, transform.position.z);
 
-        StartCoroutine(UltimateBurst(basePos, damage, pierce, spreadX, count));
+        StartCoroutine(UltimateBurst(basePos, damage, pierce, spreadX, UltimateArrowCount));
     }
 
     private IEnumerator UltimateBurst(Vector3 basePos, int damage, int pierce, float spreadX, int count)
@@ -143,5 +114,43 @@ public class Bow : MonoBehaviour
                 right++;
             }
         }
+    }
+
+    private void UpdateMovement()
+    {
+        if (cam == null) return;
+        float halfHeight = cam.orthographicSize;
+        float halfWidth = halfHeight * cam.aspect;
+
+        float y = -halfHeight + BowYOffset;
+
+        Vector3 pos = transform.position;
+        pos.y = y;
+        pos.x += xDir * speed * Time.deltaTime;
+
+        if (pos.x < -halfWidth) xDir = 1f;
+        if (pos.x > halfWidth) xDir = -1f;
+
+        transform.position = pos;
+    }
+
+    private void UpdateGauge()
+    {
+        passedTime += Time.deltaTime;
+        float effectiveCool = coolTime;
+        SkillManager skillManager = SkillManager.Instance;
+        if (skillManager != null) effectiveCool = coolTime * skillManager.GetCooldownMultiplier();
+
+        if (gauge != null)
+        {
+            gauge.fillAmount = Mathf.Clamp01(passedTime / effectiveCool);
+        }
+    }
+
+    private static float[] GetOffsets(int count)
+    {
+        if (count <= 1) return OneOffset;
+        if (count == 2) return TwoOffsets;
+        return ThreeOffsets;
     }
 }
