@@ -181,7 +181,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Bee
   hp: 1
   beeXp: 1
-  speed: 5
+  speed: 1
   xp: {fileID: 0}
   gameOver: {fileID: 0}
   hearts: {fileID: 0}
