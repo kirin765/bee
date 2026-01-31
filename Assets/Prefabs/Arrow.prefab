@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -84,7 +84,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 1975530855901943615, guid: 5f6ccd8ec57274e4d993abc6b0255de1, type: 3}
+  m_Sprite: {fileID: -4382955331876141551, guid: c1e24e23c84e6e0429ee60afb34ce00e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6203eaa4f0384e545bac78bc1194189f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Arrow
-  speed: 20
+  speed: 1
   damage: 1
   pierceRemaining: 0
 --- !u!61 &7139194049070725957
@@ -174,7 +174,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.17, y: 0.64}
+    oldSize: {x: 1.83, y: 9.65}
     newSize: {x: 0.32, y: 0.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
