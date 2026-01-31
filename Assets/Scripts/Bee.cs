@@ -22,6 +22,14 @@ public class Bee : MonoBehaviour
     public GameOver GameOverRef { get => gameOver; set => gameOver = value; }
     public Hearts HeartsRef { get => hearts; set => hearts = value; }
 
+    public void Configure(int newHp, int newXp, float newSpeed, float scale = 1f)
+    {
+        hp = Mathf.Max(1, newHp);
+        beeXp = Mathf.Max(1, newXp);
+        speed = Mathf.Max(0.1f, newSpeed);
+        if (scale > 0f) transform.localScale = transform.localScale * scale;
+    }
+
     private void Awake()
     {
         halfHeight = Camera.main.orthographicSize;

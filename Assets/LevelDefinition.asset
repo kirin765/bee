@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30f46ff783088d14a80bee5e5d993abd, type: 3}
+  m_Name: LevelDefinition
+  m_EditorClassIdentifier: Assembly-CSharp::LevelDefinition
+  waves:
+  - name: 
+    duration: 0
+    spawnMode: 0
+    spawnInterval: 0
+    spawnCount: 0
+    pattern: 0
+    waveFrequency: 0
+    waveAmplitude: 0
+    baseHp: 0
+    baseSpeed: 0
+    baseXp: 0
+    eliteChance: 0
+    eliteHpMultiplier: 0
+    eliteSpeedMultiplier: 0
+    eliteScale: 0
+    bossHpMultiplier: 0
+    bossSpeedMultiplier: 0
+    bossScale: 0
+  useDifficultyCurve: 1
+  difficultyCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 120
+      value: 1.4
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 240
+      value: 1.8
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
