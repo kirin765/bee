@@ -934,7 +934,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8acc9625eb742b34aa77c4e9ef95d9b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameOver
-  XPText: {fileID: 518222549}
+  xpText: {fileID: 0}
   xp: {fileID: 114644652}
 --- !u!114 &543850469
 MonoBehaviour:
@@ -1290,26 +1290,21 @@ MonoBehaviour:
   arrowPrefab: {fileID: -228994540754359751, guid: 927a8b7c20c100342a48c6783aa70ea2, type: 3}
   beePrefab: {fileID: 6620016483823457614, guid: eea4f9564f16ccd4f88c1f7b63090317, type: 3}
   beeCooltime: 3
-  beeSpawnYOffset: 1
+  beeSpawnYOffset: 2
   xp: {fileID: 114644652}
   gameOver: {fileID: 543850468}
   hearts: {fileID: 630227415}
-  spawnPattern: 0
   spawnMode: 0
   spawnInterval: 1
   spawnCount: 5
-  waveFrequency: 1.3
-  waveAmplitude: 0.9
   baseHp: 1
   baseSpeed: 1
   baseXp: 1
-  eliteChance: 0.1
-  eliteHpMultiplier: 2
-  eliteSpeedMultiplier: 1.1
-  eliteScale: 1.15
   bossHpMultiplier: 6
   bossSpeedMultiplier: 0.8
   bossScale: 1.5
+  randomLaneCount: 5
+  randomLaneJitter: 0.25
 --- !u!114 &687466317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1849,8 +1844,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TapToShoot
   bow: {fileID: 2030277016}
-  topBlockedHeightPx: 160
-  blockWhenOverUI: 1
   requireBottomHalf: 1
   cam: {fileID: 519420031}
 --- !u!4 &1066633083
@@ -3331,37 +3324,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1822071337}
   m_CullTransparentMesh: 1
---- !u!1 &1868181630
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1868181631}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1868181631
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1868181630}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 16.09, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1947285489
 GameObject:
   m_ObjectHideFlags: 0
@@ -3626,7 +3588,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bow
   cam: {fileID: 519420031}
-  speed: 1
+  speed: 5
   arrowSpawner: {fileID: 687466316}
   coolTime: 1
   gauge: {fileID: 565370186}
@@ -3942,6 +3904,5 @@ SceneRoots:
   - {fileID: 1645899025}
   - {fileID: 687466315}
   - {fileID: 2030277018}
-  - {fileID: 1868181631}
   - {fileID: 114644653}
   - {fileID: 1066633083}

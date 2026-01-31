@@ -12,25 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30f46ff783088d14a80bee5e5d993abd, type: 3}
   m_Name: LevelDefinition
   m_EditorClassIdentifier: Assembly-CSharp::LevelDefinition
-  waves:
-  - name: 
-    duration: 0
-    spawnMode: 0
-    spawnInterval: 0
-    spawnCount: 0
-    pattern: 0
-    waveFrequency: 0
-    waveAmplitude: 0
-    baseHp: 0
-    baseSpeed: 0
-    baseXp: 0
-    eliteChance: 0
-    eliteHpMultiplier: 0
-    eliteSpeedMultiplier: 0
-    eliteScale: 0
-    bossHpMultiplier: 0
-    bossSpeedMultiplier: 0
-    bossScale: 0
+  waves: []
   useDifficultyCurve: 1
   difficultyCurve:
     serializedVersion: 2

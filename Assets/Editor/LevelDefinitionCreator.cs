@@ -24,46 +24,35 @@ public static class LevelDefinitionCreator
             spawnMode = SpawnMode.Continuous,
             spawnInterval = 1.4f,
             spawnCount = 6,
-            pattern = SpawnPattern.Random,
             baseHp = 1,
             baseSpeed = 1.0f,
             baseXp = 1,
-            eliteChance = 0.05f,
-            eliteHpMultiplier = 2f,
             bossHpMultiplier = 8f
         });
 
         level.waves.Add(new WaveDefinition
         {
-            name = "Wave 2 - ZigZag",
+            name = "Wave 2 - Random",
             duration = 45f,
             spawnMode = SpawnMode.Continuous,
             spawnInterval = 1.2f,
             spawnCount = 8,
-            pattern = SpawnPattern.ZigZag,
             baseHp = 1,
             baseSpeed = 1.1f,
             baseXp = 1,
-            eliteChance = 0.08f,
-            eliteHpMultiplier = 2f,
             bossHpMultiplier = 8f
         });
 
         level.waves.Add(new WaveDefinition
         {
-            name = "Wave 3 - Wave",
+            name = "Wave 3 - Random",
             duration = 50f,
             spawnMode = SpawnMode.Continuous,
             spawnInterval = 1.0f,
             spawnCount = 10,
-            pattern = SpawnPattern.Wave,
-            waveFrequency = 1.6f,
-            waveAmplitude = 0.9f,
             baseHp = 2,
             baseSpeed = 1.15f,
             baseXp = 2,
-            eliteChance = 0.12f,
-            eliteHpMultiplier = 2f,
             bossHpMultiplier = 8f
         });
 
@@ -74,12 +63,9 @@ public static class LevelDefinitionCreator
             spawnMode = SpawnMode.Burst,
             spawnInterval = 0.8f,
             spawnCount = 8,
-            pattern = SpawnPattern.Random,
             baseHp = 1,
             baseSpeed = 1.0f,
             baseXp = 1,
-            eliteChance = 0.15f,
-            eliteHpMultiplier = 2f,
             bossHpMultiplier = 8f
         });
 
@@ -90,11 +76,9 @@ public static class LevelDefinitionCreator
             spawnMode = SpawnMode.Boss,
             spawnInterval = 1.0f,
             spawnCount = 1,
-            pattern = SpawnPattern.Random,
             baseHp = 2,
             baseSpeed = 0.9f,
             baseXp = 5,
-            eliteChance = 0f,
             bossHpMultiplier = 8f,
             bossSpeedMultiplier = 0.8f,
             bossScale = 1.5f

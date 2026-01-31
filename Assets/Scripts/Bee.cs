@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Bee : MonoBehaviour
 {
@@ -10,6 +11,11 @@ public class Bee : MonoBehaviour
     [SerializeField] private GameOver gameOver;
     [SerializeField] private Hearts hearts;
     [SerializeField] private string beeLayerName = "Bee";
+    
+    [SerializeField] private Image hpBar;
+    [SerializeField] private GameObject totalHpBar;
+
+    private int maxHp;
 
     private Coroutine fallCoroutine;
     private Rigidbody2D rb;
@@ -54,6 +60,11 @@ public class Bee : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
         if (rb != null) rb.freezeRotation = true;
+        if(hpBar != null)
+        {
+            hpBar.fillAmount = 1f;
+        }
+        maxHp = hp;
     }
 
     private void FixedUpdate()
@@ -97,12 +108,20 @@ public class Bee : MonoBehaviour
         if (!isAlive) return false;
 
         hp -= damage;
+        if(hpBar != null)
+        {
+            hpBar.fillAmount = Mathf.Clamp01((float)hp / (float)maxHp);
+        }
         if (hp <= 0)
         {
+            if(totalHpBar != null){
+                totalHpBar.SetActive(false);
+            }
             isAlive = false;
             col.enabled = false;
             if (xp != null) xp.AddXp(beeXp);
             if (fallCoroutine == null) fallCoroutine = StartCoroutine(Falling());
+            
             return true;
         }
 
