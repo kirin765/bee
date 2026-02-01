@@ -303,7 +303,7 @@ GameObject:
   - component: {fileID: 514269369100614295}
   - component: {fileID: 7505138493950608933}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Hp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -378,7 +378,7 @@ GameObject:
   - component: {fileID: 53735640604115087}
   - component: {fileID: 339261422483089942}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Total
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -34,7 +34,7 @@ public class Bee : MonoBehaviour
 
     public void Configure(int newHp, int newXp, float newSpeed, float scale = 1f)
     {
-        hp = Mathf.Max(1, newHp);
+        hp = maxHp = Mathf.Max(1, newHp);
         beeXp = Mathf.Max(1, newXp);
         speed = Mathf.Max(0.1f, newSpeed);
         if (scale > 0f) transform.localScale = transform.localScale * scale;
@@ -93,7 +93,10 @@ public class Bee : MonoBehaviour
             }
         }
 
-        pos.y -= Time.fixedDeltaTime * speed;
+        float effectiveSpeed = speed;
+        SkillManager skillManager = SkillManager.Instance;
+        if (skillManager != null) effectiveSpeed *= skillManager.GetBeeSpeedMultiplier();
+        pos.y -= Time.fixedDeltaTime * effectiveSpeed;
         rb.MovePosition(pos);
     }
 

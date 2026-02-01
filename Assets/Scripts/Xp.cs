@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class Xp : MonoBehaviour
 {
-    [SerializeField] private int[] xpPerLevel = { 15, 15, 15, 15, 15, 15, 15, 15, 15, 15 };
+    [SerializeField] private int[] xpPerLevel = { 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 15, 15, 15, 15, 15, 15, 15 };
     [SerializeField] private Image xpBar;
     [SerializeField] private TMP_Text levelText;
     [SerializeField] private SkillManager skillManager;

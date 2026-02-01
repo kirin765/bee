@@ -26,8 +26,7 @@ public static class LevelDefinitionCreator
             spawnCount = 6,
             baseHp = 1,
             baseSpeed = 1.0f,
-            baseXp = 1,
-            bossHpMultiplier = 8f
+            baseXp = 1
         });
 
         level.waves.Add(new WaveDefinition
@@ -39,8 +38,7 @@ public static class LevelDefinitionCreator
             spawnCount = 8,
             baseHp = 1,
             baseSpeed = 1.1f,
-            baseXp = 1,
-            bossHpMultiplier = 8f
+            baseXp = 1
         });
 
         level.waves.Add(new WaveDefinition
@@ -52,8 +50,7 @@ public static class LevelDefinitionCreator
             spawnCount = 10,
             baseHp = 2,
             baseSpeed = 1.15f,
-            baseXp = 2,
-            bossHpMultiplier = 8f
+            baseXp = 2
         });
 
         level.waves.Add(new WaveDefinition
@@ -65,25 +62,20 @@ public static class LevelDefinitionCreator
             spawnCount = 8,
             baseHp = 1,
             baseSpeed = 1.0f,
-            baseXp = 1,
-            bossHpMultiplier = 8f
+            baseXp = 1
         });
 
         level.waves.Add(new WaveDefinition
         {
-            name = "Wave 5 - Boss",
+            name = "Wave 5 - Burst",
             duration = 40f,
-            spawnMode = SpawnMode.Boss,
+            spawnMode = SpawnMode.Burst,
             spawnInterval = 1.0f,
-            spawnCount = 1,
+            spawnCount = 10,
             baseHp = 2,
             baseSpeed = 0.9f,
-            baseXp = 5,
-            bossHpMultiplier = 8f,
-            bossSpeedMultiplier = 0.8f,
-            bossScale = 1.5f
+            baseXp = 2
         });
-
         level.useDifficultyCurve = true;
         level.difficultyCurve = new AnimationCurve(
             new Keyframe(0f, 1f),

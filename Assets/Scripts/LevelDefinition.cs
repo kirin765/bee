@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum SpawnMode { Continuous, Burst, Boss }
+public enum SpawnMode { Continuous, Burst }
 
 [Serializable]
 public class WaveDefinition
@@ -12,14 +12,10 @@ public class WaveDefinition
     public SpawnMode spawnMode = SpawnMode.Continuous;
     public float spawnInterval = 1.2f;
     public int spawnCount = 5;
-
     public int baseHp = 1;
     public float baseSpeed = 1.0f;
     public int baseXp = 1;
 
-    public float bossHpMultiplier = 6.0f;
-    public float bossSpeedMultiplier = 0.8f;
-    public float bossScale = 1.5f;
 }
 
 [CreateAssetMenu(menuName = "Bee/Level Definition", fileName = "LevelDefinition")]

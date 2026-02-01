@@ -14,15 +14,17 @@ public class SkillWindow : MonoBehaviour
     [SerializeField] private Image optionBImage;
 
     [Header("Skill Sprites")]
-    [SerializeField] private Sprite arrowCountSprite;
     [SerializeField] private Sprite arrowDamageSprite;
-    [SerializeField] private Sprite arrowPiercingSprite;
     [SerializeField] private Sprite arrowCooldownSprite;
     [SerializeField] private Sprite ultimateSprite;
+    [SerializeField] private Sprite heartSprite;
+    [SerializeField] private Sprite beeSlowSprite;
+    [SerializeField] private Sprite delayedShotSprite;
 
     private Action<SkillType> onChosen;
     private SkillType optionAType;
     private SkillType optionBType;
+    private float beforeTimeScale = 1f;
 
     private void Awake()
     {
@@ -41,6 +43,7 @@ public class SkillWindow : MonoBehaviour
         SetOption(optionAText, optionAImage, a);
         SetOption(optionBText, optionBImage, b);
         // Pause game while player chooses a skill
+        beforeTimeScale = Time.timeScale;
         Time.timeScale = 0f;
     }
 
@@ -54,11 +57,12 @@ public class SkillWindow : MonoBehaviour
     {
         switch (s)
         {
-            case SkillType.ArrowCount: return "Arrow Count: 1 -> 2 -> 3 (increases cooldown)";
             case SkillType.ArrowDamage: return "Arrow Damage: +1";
-            case SkillType.ArrowPiercing: return "Arrow Piercing: penetrate more enemies (damage penalty)";
             case SkillType.ArrowCooldown: return "Arrow Cooldown: reduce cooldown";
             case SkillType.Ultimate: return "Ultimate: +1 (max 2)";
+            case SkillType.Heart: return "Heart: +1 (max 3)";
+            case SkillType.BeeSlow: return "Bee Slow: reduce bee speed";
+            case SkillType.DelayedShot: return "Delayed Shot: extra arrows with 0.1s delay (max 5)";
             default: return s.ToString();
         }
     }
@@ -67,11 +71,12 @@ public class SkillWindow : MonoBehaviour
     {
         switch (s)
         {
-            case SkillType.ArrowCount: return arrowCountSprite;
             case SkillType.ArrowDamage: return arrowDamageSprite;
-            case SkillType.ArrowPiercing: return arrowPiercingSprite;
             case SkillType.ArrowCooldown: return arrowCooldownSprite;
             case SkillType.Ultimate: return ultimateSprite;
+            case SkillType.Heart: return heartSprite;
+            case SkillType.BeeSlow: return beeSlowSprite;
+            case SkillType.DelayedShot: return delayedShotSprite;
             default: return null;
         }
     }
@@ -79,14 +84,14 @@ public class SkillWindow : MonoBehaviour
     private void ChooseA()
     {
         if (windowRoot != null) windowRoot.SetActive(false);
-        Time.timeScale = 1f;
+        Time.timeScale = Mathf.Max(1f, beforeTimeScale);
         onChosen?.Invoke(optionAType);
     }
 
     private void ChooseB()
     {
         if (windowRoot != null) windowRoot.SetActive(false);
-        Time.timeScale = 1f;
+        Time.timeScale = Mathf.Max(1f, beforeTimeScale);
         onChosen?.Invoke(optionBType);
     }
 }

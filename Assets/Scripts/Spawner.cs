@@ -24,9 +24,6 @@ public class Spawner : MonoBehaviour
     [SerializeField] private int baseHp = 1;
     [SerializeField] private float baseSpeed = 1.0f;
     [SerializeField] private int baseXp = 1;
-    [SerializeField] private float bossHpMultiplier = 6.0f;
-    [SerializeField] private float bossSpeedMultiplier = 0.8f;
-    [SerializeField] private float bossScale = 1.5f;
 
     [Header("Random Lane")]
     [SerializeField] private int randomLaneCount = 5;
@@ -37,7 +34,6 @@ public class Spawner : MonoBehaviour
     private float topLimitY;
 
     private float passedTime = 0f;
-    private bool bossSpawned = false;
     private float difficultyMultiplier = 1f;
 
     private int[] laneOrder;
@@ -59,13 +55,8 @@ public class Spawner : MonoBehaviour
             if (passedTime > interval)
             {
                 passedTime = 0f;
-                SpawnOne(false);
+                SpawnOne();
             }
-        }
-        else if (spawnMode == SpawnMode.Boss && !bossSpawned)
-        {
-            SpawnOne(true);
-            bossSpawned = true;
         }
     }
 
@@ -84,21 +75,11 @@ public class Spawner : MonoBehaviour
         baseHp = Mathf.Max(1, wave.baseHp);
         baseSpeed = Mathf.Max(0.1f, wave.baseSpeed);
         baseXp = Mathf.Max(1, wave.baseXp);
-        bossHpMultiplier = Mathf.Max(1f, wave.bossHpMultiplier);
-        bossSpeedMultiplier = Mathf.Max(0.1f, wave.bossSpeedMultiplier);
-        bossScale = Mathf.Max(0.1f, wave.bossScale);
-
         passedTime = 0f;
-        bossSpawned = false;
 
         if (spawnMode == SpawnMode.Burst)
         {
-            for (int i = 0; i < spawnCount; i++) SpawnOne(false);
-        }
-        else if (spawnMode == SpawnMode.Boss)
-        {
-            SpawnOne(true);
-            bossSpawned = true;
+            for (int i = 0; i < spawnCount; i++) SpawnOne();
         }
     }
 
@@ -146,14 +127,14 @@ public class Spawner : MonoBehaviour
         topLimitY = halfHeight;
     }
 
-    private void SpawnOne(bool forceBoss)
+    private void SpawnOne()
     {
         float spawnY = topLimitY + beeSpawnYOffset;
         float x = GetLaneRandomX();
-        MakeBeeWithStats(new Vector3(x, spawnY, 0f), forceBoss);
+        MakeBeeWithStats(new Vector3(x, spawnY, 0f));
     }
 
-    private Bee MakeBeeWithStats(Vector3 pos, bool forceBoss)
+    private Bee MakeBeeWithStats(Vector3 pos)
     {
         if (beePrefab == null) return null;
         Bee bee = Instantiate(beePrefab, pos, beePrefab.transform.rotation);
@@ -161,15 +142,11 @@ public class Spawner : MonoBehaviour
         bee.HeartsRef = hearts;
         bee.GameOverRef = gameOver;
 
-        float hpMult = forceBoss ? bossHpMultiplier : 1f;
-        float speedMult = forceBoss ? bossSpeedMultiplier : 1f;
-        float scale = forceBoss ? bossScale : 1f;
-
-        int hp = Mathf.RoundToInt(baseHp * difficultyMultiplier * hpMult);
+        int hp = Mathf.RoundToInt(baseHp * difficultyMultiplier);
         int xpVal = Mathf.RoundToInt(baseXp * difficultyMultiplier);
-        float speed = baseSpeed * speedMult;
+        float speed = baseSpeed;
 
-        bee.Configure(hp, xpVal, speed, scale);
+        bee.Configure(hp, xpVal, speed, 1f);
         return bee;
     }
 

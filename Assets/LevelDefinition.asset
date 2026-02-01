@@ -12,7 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30f46ff783088d14a80bee5e5d993abd, type: 3}
   m_Name: LevelDefinition
   m_EditorClassIdentifier: Assembly-CSharp::LevelDefinition
-  waves: []
+  waves:
+  - name: 1
+    duration: 10
+    spawnMode: 0
+    spawnInterval: 4
+    spawnCount: 1
+    baseHp: 1
+    baseSpeed: 1
+    baseXp: 1
+  - name: 1
+    duration: 10
+    spawnMode: 0
+    spawnInterval: 4
+    spawnCount: 1
+    baseHp: 1
+    baseSpeed: 1
+    baseXp: 1
   useDifficultyCurve: 1
   difficultyCurve:
     serializedVersion: 2
@@ -27,17 +43,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 120
-      value: 1.4
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 240
-      value: 1.8
+      time: 300
+      value: 15
       inSlope: 0
       outSlope: 0
       tangentMode: 0

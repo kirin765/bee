@@ -37,21 +37,22 @@ public class Bow : MonoBehaviour
     {
         if (gauge != null && gauge.fillAmount < 1.0f) return;
 
-        int count = 1;
         int damage = 1;
         int pierce = 1;
+        int delayedCount = 0;
+        float delayedInterval = 0.1f;
         SkillManager skillManager = SkillManager.Instance;
         if (skillManager != null)
         {
-            count = skillManager.GetArrowCount();
             damage = skillManager.GetArrowDamage();
-            pierce = skillManager.GetArrowPierceCount();
+            delayedCount = skillManager.GetDelayedShotCount();
+            delayedInterval = skillManager.GetDelayedShotInterval();
         }
 
-        float[] offsets = GetOffsets(count);
-        foreach (float off in offsets)
+        if (arrowSpawner != null) arrowSpawner.MakeArrow(transform.position, damage, pierce, 0f);
+        if (delayedCount > 0 && delayedInterval > 0f)
         {
-            arrowSpawner.MakeArrow(transform.position, damage, pierce, off);
+            StartCoroutine(DelayedShots(transform.position, damage, pierce, delayedCount, delayedInterval));
         }
 
         passedTime = 0f;
@@ -68,7 +69,6 @@ public class Bow : MonoBehaviour
         if (skillManager != null)
         {
             damage = skillManager.GetArrowDamage();
-            pierce = skillManager.GetArrowPierceCount();
         }
 
         Camera currentCam = cam != null ? cam : Camera.main;
@@ -113,6 +113,19 @@ public class Bow : MonoBehaviour
                 arrowSpawner.MakeArrow(basePos, damage, pierce, offsets[right], 0f);
                 right++;
             }
+        }
+    }
+
+    private IEnumerator DelayedShots(Vector3 basePos, int damage, int pierce, int extraCount, float interval)
+    {
+        for (int i = 0; i < extraCount; i++)
+        {
+            if (interval > 0f) yield return new WaitForSeconds(interval);
+            if (arrowSpawner == null) yield break;
+            float side = (i % 2 == 0) ? -1f : 1f;
+            float step = (i / 2) + 1;
+            float xOffset = 0.06f * step * side;
+            arrowSpawner.MakeArrow(basePos, damage, pierce, xOffset);
         }
     }
 
