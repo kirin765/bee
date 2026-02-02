@@ -13,6 +13,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] private Xp xp;
     [SerializeField] private GameOver gameOver;
     [SerializeField] private Hearts hearts;
+    [SerializeField] private AudioSource bowShootAudioSource;
 
     [Header("Spawn Timing")]
     [SerializeField] private float minSpawnInterval = 4.0f;
@@ -134,6 +135,10 @@ public class Spawner : MonoBehaviour
     {
         if (arrowPrefab == null) return;
         Instantiate(arrowPrefab, pos, Quaternion.identity);
+        if (bowShootAudioSource != null)
+        {
+            bowShootAudioSource.Play();
+        }
     }
 
     public void MakeArrow(Vector3 pos, float damage, int pierce, float xOffset)
@@ -143,6 +148,11 @@ public class Spawner : MonoBehaviour
         Arrow a = Instantiate(arrowPrefab, spawnPos, Quaternion.identity);
         a.damage = damage;
         a.pierceRemaining = Mathf.Max(0, pierce - 1);
+        
+        if (bowShootAudioSource != null)
+        {
+            bowShootAudioSource.Play();
+        }
     }
 
     public void MakeArrow(Vector3 pos, float damage, int pierce, Vector2 offset, float angleDeg)
@@ -153,6 +163,11 @@ public class Spawner : MonoBehaviour
         Arrow a = Instantiate(arrowPrefab, spawnPos, rot);
         a.damage = damage;
         a.pierceRemaining = Mathf.Max(0, pierce - 1);
+        
+        if (bowShootAudioSource != null)
+        {
+            bowShootAudioSource.Play();
+        }
     }
 
     public void MakeBee(Vector3 pos)
