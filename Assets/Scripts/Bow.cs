@@ -7,12 +7,19 @@ public class Bow : MonoBehaviour
     [SerializeField] private Camera cam;
     [SerializeField] private float speed = 1.0f;
     [SerializeField] private Spawner arrowSpawner;
+    [SerializeField] private Xp xp;
     [SerializeField] private float coolTime = 1.0f;
     [SerializeField] private Image gauge;
     [SerializeField] private float ultimateShotInterval = 0.03f;
+    [SerializeField] private float speedScaleInterval = 20.0f;
+    [SerializeField] private float speedScaleMultiplier = 1.1f;
+    [SerializeField] private int speedScaleLevel = 10;
 
     private float xDir = 1.0f;
     private float passedTime = 0f;
+    private float baseSpeed = 1.0f;
+    private float speedScaleTimer = 0f;
+    private float speedMultiplier = 1.0f;
 
     private const float BowYOffset = 0.75f;
     private const int UltimateArrowCount = 11;
@@ -23,6 +30,7 @@ public class Bow : MonoBehaviour
     private void Start()
     {
         if (cam == null) cam = Camera.main;
+        baseSpeed = speed;
     }
 
     private void Update()
@@ -37,7 +45,7 @@ public class Bow : MonoBehaviour
     {
         if (gauge != null && gauge.fillAmount < 1.0f) return;
 
-        int damage = 1;
+        float damage = 1f;
         int pierce = 1;
         int delayedCount = 0;
         float delayedInterval = 0.1f;
@@ -64,7 +72,7 @@ public class Bow : MonoBehaviour
         if (skillManager != null && !skillManager.TryUseUltimate()) return;
         if (arrowSpawner == null) return;
 
-        int damage = 1;
+        float damage = 1f;
         int pierce = 1;
         if (skillManager != null)
         {
@@ -81,7 +89,7 @@ public class Bow : MonoBehaviour
         StartCoroutine(UltimateBurst(basePos, damage, pierce, spreadX, UltimateArrowCount));
     }
 
-    private IEnumerator UltimateBurst(Vector3 basePos, int damage, int pierce, float spreadX, int count)
+    private IEnumerator UltimateBurst(Vector3 basePos, float damage, int pierce, float spreadX, int count)
     {
         if (count <= 0) yield break;
 
@@ -116,7 +124,7 @@ public class Bow : MonoBehaviour
         }
     }
 
-    private IEnumerator DelayedShots(Vector3 basePos, int damage, int pierce, int extraCount, float interval)
+    private IEnumerator DelayedShots(Vector3 basePos, float damage, int pierce, int extraCount, float interval)
     {
         for (int i = 0; i < extraCount; i++)
         {
@@ -124,7 +132,7 @@ public class Bow : MonoBehaviour
             if (arrowSpawner == null) yield break;
             float side = (i % 2 == 0) ? -1f : 1f;
             float step = (i / 2) + 1;
-            float xOffset = 0.06f * step * side;
+            float xOffset = 0.12f * step * side;
             arrowSpawner.MakeArrow(basePos, damage, pierce, xOffset);
         }
     }
@@ -139,7 +147,20 @@ public class Bow : MonoBehaviour
 
         Vector3 pos = transform.position;
         pos.y = y;
-        pos.x += xDir * speed * Time.deltaTime;
+        float effectiveSpeed = baseSpeed;
+        int level = xp != null ? xp.Level : 0;
+        if (level > speedScaleLevel && speedScaleInterval > 0f)
+        {
+            speedScaleTimer += Time.deltaTime;
+            if (speedScaleTimer >= speedScaleInterval)
+            {
+                int steps = Mathf.FloorToInt(speedScaleTimer / speedScaleInterval);
+                speedScaleTimer -= steps * speedScaleInterval;
+                speedMultiplier *= Mathf.Pow(speedScaleMultiplier, steps);
+            }
+        }
+        effectiveSpeed *= speedMultiplier;
+        pos.x += xDir * effectiveSpeed * Time.deltaTime;
 
         if (pos.x < -halfWidth) xDir = 1f;
         if (pos.x > halfWidth) xDir = -1f;

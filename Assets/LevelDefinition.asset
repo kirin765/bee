@@ -14,18 +14,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelDefinition
   waves:
   - name: 1
-    duration: 10
+    duration: 20
     spawnMode: 0
     spawnInterval: 4
     spawnCount: 1
     baseHp: 1
     baseSpeed: 1
     baseXp: 1
-  - name: 1
-    duration: 10
+  - name: 2
+    duration: 20
     spawnMode: 0
-    spawnInterval: 4
+    spawnInterval: 3
     spawnCount: 1
+    baseHp: 1
+    baseSpeed: 1
+    baseXp: 1
+  - name: 3
+    duration: 20
+    spawnMode: 0
+    spawnInterval: 2
+    spawnCount: 1
+    baseHp: 1
+    baseSpeed: 1
+    baseXp: 1
+  - name: 4
+    duration: 20
+    spawnMode: 0
+    spawnInterval: 2
+    spawnCount: 2
+    baseHp: 1
+    baseSpeed: 1
+    baseXp: 1
+  - name: 4
+    duration: 20
+    spawnMode: 0
+    spawnInterval: 2
+    spawnCount: 2
     baseHp: 1
     baseSpeed: 1
     baseXp: 1
@@ -43,7 +67,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 300
+      time: 600
       value: 15
       inSlope: 0
       outSlope: 0

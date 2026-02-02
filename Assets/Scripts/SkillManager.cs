@@ -5,7 +5,7 @@ public enum SkillType { ArrowDamage, ArrowCooldown, Ultimate, Heart, BeeSlow, De
 
 public class SkillManager : MonoBehaviour
 {
-    [SerializeField] private int arrowDamage = 1;
+    [SerializeField] private float arrowDamage = 1f;
     [SerializeField] private float cooldownMultiplier = 1.0f; // multiplies base cooldown
     [SerializeField] private int ultimateCount = 1;
     [SerializeField] private int maxUltimateCount = 2;
@@ -26,7 +26,7 @@ public class SkillManager : MonoBehaviour
         ultimateCount = Mathf.Clamp(ultimateCount, 1, maxUltimateCount);
     }
 
-    public int GetArrowDamage() => Mathf.Max(1, arrowDamage);
+    public float GetArrowDamage() => Mathf.Max(1f, arrowDamage);
 
     public float GetCooldownMultiplier() => cooldownMultiplier;
 
@@ -59,10 +59,10 @@ public class SkillManager : MonoBehaviour
         switch (skill)
         {
             case SkillType.ArrowDamage:
-                arrowDamage += 1;
+                arrowDamage *= 1.2f;
                 break;
             case SkillType.ArrowCooldown:
-                cooldownMultiplier = Mathf.Max(0.5f, cooldownMultiplier * 0.9f);
+                cooldownMultiplier = Mathf.Max(0.5f, cooldownMultiplier * 0.8f);
                 break;
             case SkillType.Ultimate:
                 if (ultimateCount < maxUltimateCount) ultimateCount++;
@@ -71,7 +71,7 @@ public class SkillManager : MonoBehaviour
                 if (hearts != null) hearts.AddHeart(maxHeartCount);
                 break;
             case SkillType.BeeSlow:
-                beeSpeedMultiplier = Mathf.Max(0.5f, beeSpeedMultiplier * 0.9f);
+                beeSpeedMultiplier = Mathf.Max(0.5f, beeSpeedMultiplier * 0.8f);
                 break;
             case SkillType.DelayedShot:
                 delayedShotLevel = Mathf.Clamp(delayedShotLevel + 1, 0, maxDelayedShotLevel);

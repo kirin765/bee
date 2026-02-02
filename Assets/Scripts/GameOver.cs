@@ -15,8 +15,8 @@ public class GameOver : MonoBehaviour
     public void TurnOn()
     {
         gameObject.SetActive(true);
-        int xpSum = xp != null ? xp.totalXP() : 0;
-        if (xpText != null) xpText.text = $"{xpSum}XP";
+        float xpSum = xp != null ? xp.totalXP() : 0f;
+        if (xpText != null) xpText.text = $"{xpSum:0.##}XP";
         Time.timeScale = 0f;
     }
 

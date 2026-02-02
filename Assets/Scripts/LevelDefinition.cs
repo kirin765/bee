@@ -12,9 +12,9 @@ public class WaveDefinition
     public SpawnMode spawnMode = SpawnMode.Continuous;
     public float spawnInterval = 1.2f;
     public int spawnCount = 5;
-    public int baseHp = 1;
+    public float baseHp = 1f;
     public float baseSpeed = 1.0f;
-    public int baseXp = 1;
+    public float baseXp = 1f;
 
 }
 

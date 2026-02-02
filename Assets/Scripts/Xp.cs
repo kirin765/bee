@@ -4,31 +4,33 @@ using UnityEngine.UI;
 
 public class Xp : MonoBehaviour
 {
-    [SerializeField] private int[] xpPerLevel = { 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 15, 15, 15, 15, 15, 15, 15 };
+    [SerializeField] private float baseXpRequirement = 10f;
+    [SerializeField] private float xpIncreaseMultiplier = 1.3f;
     [SerializeField] private Image xpBar;
     [SerializeField] private TMP_Text levelText;
     [SerializeField] private SkillManager skillManager;
     [SerializeField] private SkillWindow skillWindow;
 
-    private int xpSum;
+    private float xpSum;
     private int level;
+    private float totalXpEarned = 0f;
 
     public int Level => level;
-    public int XpSum => xpSum;
+    public float XpSum => xpSum;
 
     private void Start()
     {
         xpSum = 0;
     }
 
-    public void AddXp(int xp)
+    public void AddXp(float xp)
     {
+        totalXpEarned += xp;
         xpSum += xp;
-        if (xpPerLevel == null || xpPerLevel.Length == 0) return;
 
-        while (level < xpPerLevel.Length && xpSum >= xpPerLevel[level])
+        while (xpSum >= GetRequiredXp(level))
         {
-            xpSum -= xpPerLevel[level];
+            xpSum -= GetRequiredXp(level);
             level++;
             if (xpBar != null) xpBar.fillAmount = 0f;
 
@@ -41,8 +43,8 @@ public class Xp : MonoBehaviour
 
         if (xpBar != null)
         {
-            int idx = Mathf.Clamp(level, 0, xpPerLevel.Length - 1);
-            xpBar.fillAmount = Mathf.Clamp01((float)xpSum / xpPerLevel[idx]);
+            float required = Mathf.Max(1f, GetRequiredXp(level));
+            xpBar.fillAmount = Mathf.Clamp01(xpSum / required);
         }
 
         if (levelText != null)
@@ -51,14 +53,14 @@ public class Xp : MonoBehaviour
         }
     }
 
-    public int totalXP()
+    public float totalXP()
     {
-        int sum = 0;
-        for (int i = 0; i < level; i++)
-        {
-            sum += xpPerLevel[i];
-        }
+        return totalXpEarned;
+    }
 
-        return sum + xpSum;
+    private float GetRequiredXp(int levelIndex)
+    {
+        float mult = Mathf.Max(1f, xpIncreaseMultiplier);
+        return Mathf.Max(1f, baseXpRequirement) * Mathf.Pow(mult, levelIndex);
     }
 }

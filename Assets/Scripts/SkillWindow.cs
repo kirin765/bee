@@ -57,7 +57,7 @@ public class SkillWindow : MonoBehaviour
     {
         switch (s)
         {
-            case SkillType.ArrowDamage: return "Arrow Damage: +1";
+            case SkillType.ArrowDamage: return "Arrow Damage: +20%";
             case SkillType.ArrowCooldown: return "Arrow Cooldown: reduce cooldown";
             case SkillType.Ultimate: return "Ultimate: +1 (max 2)";
             case SkillType.Heart: return "Heart: +1 (max 3)";

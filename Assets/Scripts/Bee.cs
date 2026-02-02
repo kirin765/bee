@@ -1,11 +1,12 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Bee : MonoBehaviour
 {
-    [SerializeField] private int hp = 1;
-    [SerializeField] private int beeXp = 1;
+    [SerializeField] private float hp = 1f;
+    [SerializeField] private float beeXp = 1f;
     [SerializeField] private float speed = 1.0f;
     [SerializeField] private Xp xp;
     [SerializeField] private GameOver gameOver;
@@ -15,7 +16,7 @@ public class Bee : MonoBehaviour
     [SerializeField] private Image hpBar;
     [SerializeField] private GameObject totalHpBar;
 
-    private int maxHp;
+    private float maxHp;
 
     private Coroutine fallCoroutine;
     private Rigidbody2D rb;
@@ -31,11 +32,16 @@ public class Bee : MonoBehaviour
     public Xp XpRef { get => xp; set => xp = value; }
     public GameOver GameOverRef { get => gameOver; set => gameOver = value; }
     public Hearts HeartsRef { get => hearts; set => hearts = value; }
+    public bool IsBoss { get; set; }
 
-    public void Configure(int newHp, int newXp, float newSpeed, float scale = 1f)
+    public event Action<Bee> OnDeath;
+
+    private bool deathNotified = false;
+
+    public void Configure(float newHp, float newXp, float newSpeed, float scale = 1f)
     {
-        hp = maxHp = Mathf.Max(1, newHp);
-        beeXp = Mathf.Max(1, newXp);
+        hp = maxHp = Mathf.Max(1f, newHp);
+        beeXp = Mathf.Max(1f, newXp);
         speed = Mathf.Max(0.1f, newSpeed);
         if (scale > 0f) transform.localScale = transform.localScale * scale;
     }
@@ -59,7 +65,11 @@ public class Bee : MonoBehaviour
         deathLineY = -halfHeight - DeathLineOffset;
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
-        if (rb != null) rb.freezeRotation = true;
+        if (rb != null)
+        {
+            rb.bodyType = RigidbodyType2D.Kinematic;
+            rb.freezeRotation = true;
+        }
         if(hpBar != null)
         {
             hpBar.fillAmount = 1f;
@@ -78,6 +88,7 @@ public class Bee : MonoBehaviour
             isAlive = false;
             if (hearts != null && hearts.IsInvincible)
             {
+                NotifyDeath();
                 Destroy(gameObject);
                 return;
             }
@@ -89,6 +100,7 @@ public class Bee : MonoBehaviour
             }
             else
             {
+                NotifyDeath();
                 Destroy(gameObject);
             }
         }
@@ -106,16 +118,16 @@ public class Bee : MonoBehaviour
     }
 
     // Returns true if the bee died from this damage
-    public bool TakeDamage(int damage)
+    public bool TakeDamage(float damage)
     {
         if (!isAlive) return false;
 
         hp -= damage;
         if(hpBar != null)
         {
-            hpBar.fillAmount = Mathf.Clamp01((float)hp / (float)maxHp);
+            hpBar.fillAmount = Mathf.Clamp01(hp / maxHp);
         }
-        if (hp <= 0)
+        if (hp <= 0f)
         {
             if(totalHpBar != null){
                 totalHpBar.SetActive(false);
@@ -123,6 +135,7 @@ public class Bee : MonoBehaviour
             isAlive = false;
             col.enabled = false;
             if (xp != null) xp.AddXp(beeXp);
+            NotifyDeath();
             if (fallCoroutine == null) fallCoroutine = StartCoroutine(Falling());
             
             return true;
@@ -145,5 +158,12 @@ public class Bee : MonoBehaviour
         }
 
         Destroy(gameObject);
+    }
+
+    private void NotifyDeath()
+    {
+        if (deathNotified) return;
+        deathNotified = true;
+        OnDeath?.Invoke(this);
     }
 }

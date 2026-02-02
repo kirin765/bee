@@ -302,7 +302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44bab27c37a236841b6ebbc59941b757, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Xp
-  xpPerLevel: 0f0000000f0000000f0000000f0000000f0000000f0000000f0000000f0000000f0000000f000000
+  xpPerLevel: 0a0000000a0000000a0000000a0000000a0000000a0000000a0000000a0000000a0000000a0000000a0000000a0000000a0000000a0000000a0000000a0000000a0000000a0000000f0000000f000000
   xpBar: {fileID: 1981243826}
   levelText: {fileID: 1205077595}
   skillManager: {fileID: 542580014}
@@ -871,8 +871,11 @@ MonoBehaviour:
   ultimateCount: 1
   maxUltimateCount: 2
   beeSpeedMultiplier: 1
-  hearts: {fileID: 0}
+  hearts: {fileID: 630227415}
   maxHeartCount: 3
+  delayedShotLevel: 0
+  maxDelayedShotLevel: 5
+  delayedShotInterval: 0.1
 --- !u!114 &542580015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -895,8 +898,9 @@ MonoBehaviour:
   arrowDamageSprite: {fileID: 21300000, guid: 295dab734f074c644bb57b77e862f012, type: 3}
   arrowCooldownSprite: {fileID: 21300000, guid: f8abf16304410a641964061e5750c442, type: 3}
   ultimateSprite: {fileID: 21300000, guid: 524c9f41344ba0d4d9ff3b4584806b4d, type: 3}
-  heartSprite: {fileID: 0}
-  beeSlowSprite: {fileID: 0}
+  heartSprite: {fileID: -205270267638800340, guid: 264c4393dfd0fa04a88c931e61a8e86f, type: 3}
+  beeSlowSprite: {fileID: 21300000, guid: cca50d608a6605c4886ec5cba060278c, type: 3}
+  delayedShotSprite: {fileID: 21300000, guid: 4f423c782bbb4f543afdeb721fdc6ec0, type: 3}
 --- !u!1 &543850466
 GameObject:
   m_ObjectHideFlags: 0
@@ -3016,7 +3020,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 295dab734f074c644bb57b77e862f012, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cca50d608a6605c4886ec5cba060278c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
