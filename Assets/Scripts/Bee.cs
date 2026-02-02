@@ -15,6 +15,7 @@ public class Bee : MonoBehaviour
     
     [SerializeField] private Image hpBar;
     [SerializeField] private GameObject totalHpBar;
+    [SerializeField] private AudioSource beeShotAudioSource;
 
     private float maxHp;
 
@@ -149,6 +150,10 @@ public class Bee : MonoBehaviour
         float passedTime = 0f;
         Vector3 baseScale = transform.localScale;
 
+        if (beeShotAudioSource != null)
+        {
+            beeShotAudioSource.Play();
+        }
         while (passedTime < FallDuration)
         {
             passedTime += Time.deltaTime;
