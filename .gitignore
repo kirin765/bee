@@ -48,3 +48,4 @@ Thumbs.db
 # Ignore large generated files and temporary build artifacts
 /Temp/
 /obj/
+.utmp/

@@ -21,38 +21,6 @@ MonoBehaviour:
     baseHp: 1
     baseSpeed: 1
     baseXp: 1
-  - name: 2
-    duration: 20
-    spawnMode: 0
-    spawnInterval: 3
-    spawnCount: 1
-    baseHp: 1
-    baseSpeed: 1
-    baseXp: 1
-  - name: 3
-    duration: 20
-    spawnMode: 0
-    spawnInterval: 2
-    spawnCount: 1
-    baseHp: 1
-    baseSpeed: 1
-    baseXp: 1
-  - name: 4
-    duration: 20
-    spawnMode: 0
-    spawnInterval: 2
-    spawnCount: 2
-    baseHp: 1
-    baseSpeed: 1
-    baseXp: 1
-  - name: 4
-    duration: 20
-    spawnMode: 0
-    spawnInterval: 2
-    spawnCount: 2
-    baseHp: 1
-    baseSpeed: 1
-    baseXp: 1
   useDifficultyCurve: 1
   difficultyCurve:
     serializedVersion: 2
