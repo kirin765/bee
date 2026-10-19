@@ -57,12 +57,12 @@ public class SkillWindow : MonoBehaviour
     {
         switch (s)
         {
-            case SkillType.ArrowDamage: return "화살 공격력: +20%";
-            case SkillType.ArrowCooldown: return "화살 쿨다운 감소";
-            case SkillType.Ultimate: return "궁극기: +1 (최대 2)";
-            case SkillType.Heart: return "하트: +1 (최대 3)";
-            case SkillType.BeeSlow: return "벌 감속: 벌 속도 감소";
-            case SkillType.DelayedShot: return "지연 샷: 화살 추가(0.1초 지연, 최대 5)";
+            case SkillType.ArrowDamage: return Localization.T("화살 공격력: +20%");
+            case SkillType.ArrowCooldown: return Localization.T("화살 쿨다운 감소");
+            case SkillType.Ultimate: return Localization.T("궁극기: +1 (최대 2)");
+            case SkillType.Heart: return Localization.T("하트: +1 (최대 3)");
+            case SkillType.BeeSlow: return Localization.T("벌 감속: 벌 속도 감소");
+            case SkillType.DelayedShot: return Localization.T("지연 샷: 화살 추가(0.1초 지연, 최대 5)");
             default: return s.ToString();
         }
     }

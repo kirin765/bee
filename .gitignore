@@ -33,8 +33,10 @@ Thumbs.db
 *.aab
 *.unitypackage
 
-# Asset meta and cache (keep Assets and ProjectSettings only)
-/Assets/**/*.meta
+# IMPORTANT: Unity .meta files MUST be committed. They hold the asset GUIDs that
+# link scenes, prefabs and assets together. Ignoring them causes Unity to
+# regenerate new GUIDs on every clone, breaking every reference (missing
+# scripts, missing fonts/sprites, etc.).
 
 # Don't check in local Unity Packages cache
 /Library/PackageCache/
@@ -49,3 +51,11 @@ Thumbs.db
 /Temp/
 /obj/
 .utmp/
+
+# Apps in Toss Unity SDK build output
+/webgl/
+/ait-build/
+
+# Apps in Toss deploy credentials (secret - never commit)
+Assets/AppsInToss/Editor/AITCredentials.asset
+Assets/AppsInToss/Editor/AITCredentials.asset.meta

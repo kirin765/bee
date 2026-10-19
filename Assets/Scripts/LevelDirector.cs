@@ -6,6 +6,6 @@ public class LevelDirector : MonoBehaviour
 
     private void Start()
     {
-        if (spawner == null) spawner = FindFirstObjectByType<Spawner>();
+        if (spawner == null) spawner = FindAnyObjectByType<Spawner>();
     }
 }
